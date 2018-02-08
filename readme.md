@@ -666,7 +666,7 @@ int main()
 }
 ```
 
-正常情况下 y>x 是直觉上正确的 按c的规则 应返回一个非0值 然而 实际输出却是0 原因在于`int`会被提升为`unsigned int` 即-1的补码会被解释成原码[原码用于表示无符号数] 导致x被机器认为是一个很大的数
+正常情况下 y>x 是直觉上正确的 按c的规则 应返回一个非0值 然而 实际输出却是0 原因在于`int`会被提升为`unsigned int` 即-1的补码会被解释成无符号数 导致x被机器认为是一个很大的数
 
 
 
@@ -955,5 +955,160 @@ int main()
 
 最后附上c语言运算符的优先级与结合性表 越靠前的运算符优先级越高 相同行的运算符优先级相同
 
-![operator]()
+![operator](https://github.com/YohnWang/let-s-study/blob/master/resource/picture/c-operators.png)
+
+
+
+# 语句
+
+c语言提供选择语句 循环语句 和跳转语句
+
+选择语句包括
+
+1. if语句
+2. switch语句
+
+循环语句包括
+
+1. while语句
+2. for语句
+3. do while语句
+
+跳转语句使用`goto` 
+
+
+
+选择语句例程
+
+```c
+void fun(int a,int b)
+{
+    if(a==b)
+    {
+        a=1;
+        b=2;
+    }
+    else 
+    {
+        a=2;
+        b=1;
+    }
+}
+```
+
+另外一个是switch语句 
+
+```c
+void f(int x)
+{
+    switch(x)
+    {
+    case 1:
+        printf("first");
+        break;
+    case 2:
+        printf("second");
+        break;
+    case 3:
+        printf("third");
+    default:
+        printf("default");
+    }
+}
+```
+
+如果x匹配到某个值 那么就会跳转到那个位置去执行 `break`表示结束switch语句 否则 不管有没有匹配 都会继续向下执行 知道switch语句结束或者是遇到下一个`break`
+
+switch不能范围匹配 他只能匹配一个确定的值 并且必须是整型类型 
+
+
+
+循环语句例程
+
+之前以有for语句和while的例程 这里不再给出 
+
+do while 语句与上述两个循环不同的是 他至少执行一次
+
+```c
+void fun(int a,int b)
+{
+    do
+    {
+        printf("a-b=%d\n",a-b);
+    }while(a>b);
+}
+```
+
+由于该语句第一次循环时不进行条件检查 实际使用中是容易发生问题的 故不推荐使用do while语句
+
+
+
+`break`与`continue`关键字
+
+在循环中 可能需要用到某一条件达成后立即结束循环 或者是某一条件成立时 直接进行下一次循环
+
+```c
+void fun(int a,int b)
+{
+    while(a<b)
+    {
+        if(a+b==10)
+            break;
+        if(a==10)
+            continue;
+        printf("process once\n");
+    }
+}
+```
+
+`break`执行后会直接结束循环 [只能退出一重循环]
+
+`continue`执行后会立即回到循环的条件判断位置 然后开始下一轮循环
+
+此处如果`a+b==10`成立 那么循环结束 
+
+如果`a==10`成立 那么下面的`printf`将不会执行 但循环继续
+
+
+
+`goto`语句
+
+跳转语句会直接跳转到指定的位置执行[限制在一个函数内 不能在函数间跳转]
+
+由于其任意性 一般是不会使用的 常用的地方一般是错误处理或者是多重循环退出
+
+考虑以下问题 是否存在某个三位的数 abc 他等于a^3+b^3+c^3 [`^`这里代表幂 c语言中他是**异或**]
+
+只要找到一个就行
+
+```c
+int main()
+{
+    int result=-1;
+    for(int i=1;i<10;i++)
+    {
+        for(int j=0;j<10;j++)
+        {
+            for(int k=0;k<10;k++)
+            {
+                if(i*i*i+j*j*j+k*k*k==i*100+j*10+k)
+                {
+                    result=i*100+j*10+k;
+                    goto END;
+                }
+            }
+        }
+    }
+END:
+    printf("%d",result);
+}
+```
+
+此处的三重循环 使用`break`是不能跳出的 使用`goto`则很方便
+
+另一个作用是错误处理 方便统一管理
+
+无论何种使用方式 `goto`都是往后跳转 如果往前跳转 会导致程序逻辑混乱 
+
+一般情况下 避免使用`goto` 
 
