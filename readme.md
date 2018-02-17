@@ -1641,7 +1641,7 @@ int main()
 
 根据这种存储结构 可以将二维数组当成一维数组访问
 
-但是 传递参数时 不能传入数组名 因为会引发一个类型不一致的错误
+但是 传递参数时 **不能传入数组名 因为会引发一个类型不一致的错误**
 
 另一种看法 其实多维数组本身不是多维数组 更应该将其看做数组的数组
 
@@ -1713,4 +1713,108 @@ void print_matrix(int m,int n,int a[m][n])
 
 
 # 函数
+
+将代码全部集中于`main`函数不是一个好的主意 单个模块的代码越长 意味着出错的可能性加大 更重要的是 这不利于代码的维护和除错 使代码更易理解 这是非常重要的
+
+c语言通过函数 可以实现对模块的拆分 一般来说 一个函数实现一个功能 也可以多个函数实现一个功能
+
+不过 一个函数实现多个功能也是可以的 但这并不是个好主意
+
+### 函数的构成
+
+一个函数 需要有
+
+1. 函数名
+2. 返回类型
+3. 参数列表
+4. 函数体
+
+一个简单的例子就是交换两个变量
+
+```c
+void swap(int *a,int *b)
+{
+    int tmp=*a;
+    *a=*b;
+    *b=tmp;
+}
+```
+
+`swap`是函数名 `void`是返回类型 `(int *a,int *b)`是参数列表 `{...}`是函数体
+
+这几个部分缺一不可 参数列表可以为空 写作`void fun(void){}` 这虽然也很奇怪 但由于历史原因 `void fun(){}`的写法虽然更像是参数列表为空 但实际上他表示可以接受任意个参数[但是无法使用到 传进去的参数如何获取？]
+
+函数也可以有返回值 例如 编写一个二分查找的函数 找到则返回下标 未找到则返回-1
+
+```c
+#include<stdio.h>
+
+int bfind(int a[],int n,int key)
+{
+    int begin=0,end=n-1;
+    while(begin<=end)
+    {
+        int center=(begin+end)/2;
+        if(key<a[center])
+            end=center-1;
+        else if(key>a[center])
+            begin=center+1;
+        else
+            return center;
+    }
+    return -1;
+}
+
+int main()
+{
+    int a[]={1,3,5,7,9};
+    int index=bfind(a,sizeof(a)/sizeof(a[0]),5);
+    printf("%d",index);
+}
+```
+
+`return`关键字用于返回函数的返回值 如果返回值为空 则写作`return;`即可
+
+返回值的类型要相匹配 类型不一致且不存在隐式类型转换 则是错误的
+
+函数一旦执行`return` 函数也便结束了
+
+
+
+### 函数声明
+
+函数在使用前必须声明 定义函数的同时也会声明 声明后的函数可以在下方使用 其中 一个好的声明方式就是直接使用函数定义去除掉函数体的那一部分 
+
+```c
+#include<stdio.h>
+
+int bfind(int a[], int n, int key); //声明 
+int bfind(int[],int,int); //可以重复声明 并且 声明时可以去除参数列表中的名字 但定义时不能去
+
+int main()
+{
+    int a[]={1,3,5,7,9};
+    int index=bfind(a,sizeof(a)/sizeof(a[0]),5); //在上面已经声明
+    printf("%d",index);
+}
+int bfind(int a[],int n,int key) //定义函数 在他下方的函数可以直接使用 但上方的函数不可见 需要声明
+{
+    int begin=0,end=n-1;
+    while(begin<=end)
+    {
+        int center=(begin+end)/2;
+        if(key<a[center])
+            end=center-1;
+        else if(key>a[center])
+            begin=center+1;
+        else
+            return center;
+    }
+    return -1;
+}
+```
+
+
+
+### 递归函数
 
