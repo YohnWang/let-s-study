@@ -1984,5 +1984,216 @@ int is_odd(int x)
 
 
 
+尾递归及其优化
+
+当一个函数调用自身只出现在函数末尾 且仅仅调用它自身[即仅仅出现 `return fun();` 而不是`return fun()+1;`] 那么称之为尾递归 以上递归的例子中 只有第一个求解最大公约数是尾递归 其他的例子均不是
+
+从尾递归的形式上看 可以添加一条`goto`语句来优化 以最大公约数为例
+
+```c
+int gcd(int a,int b)
+{
+BEGIN:
+    if(b==0)
+        return a;
+    int r=a%b;
+    a=b;
+    b=r;
+    goto BEGIN;
+}
+```
+
+可以看到 当参数不满足递归出口条件时 改写参数后重新回到函数开始处继续执行即可
+
+**编译器会自动优化尾递归** 上例只是补充编译器是如何优化尾递归的 
+
+
+
 ### 函数指针
+
+指针可以指向一个函数 指向函数的指针被称为函数指针
+
+```c
+int fun(int x)
+{
+    return x*x;
+}
+
+int main()
+{
+    int (*p1)(int)=fun;
+    int x=(*p1)(2);
+    int y=p1(2);
+    int (*p2)(int)=&fun;
+    typedef int (*FUN_TYPE)(int);
+    FUN_TYPE p3=fun;
+}
+```
+
+指针指向函数后 他的调用方式可以和原来函数一样 不需要解引用 而对函数取不取地址也相同 二者都返回函数的首地址 
+
+需要注意的是 这里的类型声明方式 函数指针的类型 在原来函数名的地方 改成`(*)` 而指针名写在`*`之后
+
+如此奇怪的定义方式 与c语言的语法分析器算法有关 利用`typedef`定义了一个类型别名 新类型名的位置也和前者相同 使用新类型名即和基本数据类型相同 
+
+那么函数指针有什么用处呢 考虑一个标准库函数的例子 
+
+对于数据排序 可能会对整型变量按非递减排序 也可以是对字符串按字典序排序 如何实现一个通用的排序函数呢
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+
+void print_arr(int a[],int n)
+{
+    for(int i=0;i<n;i++)
+        printf("%d ",a[i]);
+    printf("\n");
+}
+
+int cmp1(const void *a,const void *b)
+{
+    return *(int*)a-*(int*)b; 
+}
+
+int cmp2(const void *a,const void *b)
+{
+    const int *x=a;
+    const int *y=b;
+    return *y-*x;
+}
+
+int main()
+{
+    int a[9]={9,4,8,7,1,3,2,6,5};
+    int b[9]={3,2,6,7,1,9,4,8,5};
+    qsort(a,9,sizeof(a[0]),cmp1);
+    qsort(b,9,sizeof(b[0]),cmp2);
+    print_arr(a,9);
+    print_arr(b,9);
+}
+```
+
+`qsort`接受四个参数 第一个参数为数组首地址 第二个参数为数组元素个数 第三个参数为单个元素的字节长 第四个为比较函数的函数指针
+
+其中 比较函数返回0表示相等 小于0表示小于 大于0表示大于 上述两个例子直接使用减法来表示这种结构
+
+比较函数传入两个`const void*`指针 使用时需要类型转换 第一个使用了强制类型转换 而第二个使用了`void*`作为通用指针可以赋给任意其他类型的指针 但是`const`是不可丢弃的 
+
+这样就对两个数组分别实现从小到大排序和从大到小排序
+
+
+
+c标准库有个`signal.h`头文件 它用于接受某个信号后执行相关动作 一般来说 各个信号都有默认执行的动作 例如 除零错误的信号 程序外部强制终止的信号等 可以通过`signal`函数来改写执行的动作
+
+例如  [该例程需要在linux系统上运行]
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<signal.h>
+
+void handler(int signum)
+{
+    fprintf(stderr,"catch signal %d\n", signum);
+    exit(0);
+}
+
+int main()
+{
+    signal(SIGFPE,handler);
+    int x=0;
+    int y=10/x;
+    printf("%d",y);
+}
+```
+
+在遇到除零错误时 会给进程发送一个除零错误信号 此时会调用`handler` 
+
+`exit`函数用于直接退出进程 其中的参数表示返回给系统的值 `fprintf`用于向错误流输出信息 他保证输出结果一定会显示在屏幕上
+
+### 内联函数
+
+`inline`关键字用于修饰函数 以表示该函数为内联函数 内联函数可以消除调用函数带来的开销 而使用时与函数相同 一般来说内联函数很短 以及足够得简单 内联函数并非总能内联 
+
+例如 `swap`函数 该函数可以实现内联 
+
+```c
+inline void swap(int *a,int *b)
+{
+    int tmp=*a;
+    *a=*b;
+    *b=tmp;
+}
+```
+
+内联函数会在调用时被展开 实际上编译后它已经不是一个函数了 内联函数一般写在头文件中
+
+
+
+### 可变参数列表
+
+诸如`printf`与`scanf`函数 它们可以接受任意个参数 实际上是使用了可变参数列表 它使用`...`表示
+
+例如 `printf`的函数原型是`int printf(const char *format,...);`
+
+下面给出一个用于求n个数和的例子
+
+```c
+#include<stdio.h>
+#include<stdarg.h>
+
+int sum(int n,...)
+{
+    va_list ap;
+    va_start(ap,n);
+    int r=0;
+    for(int i=0;i<n;i++)
+    {
+        int num=va_arg(ap,int);
+        r+=num;
+    }
+    va_end(ap);
+    return r;
+}
+
+int main()
+{
+    printf("%d\n",sum(5,1,2,3,4,5));
+    printf("%d\n",sum(3,1,2,3));
+}
+```
+
+使用可变参数列表必须使用`stdarg.h`头文件按固定的规则使用即可 注意 参数的类型和个数编译器无法检查 需要程序员自己指定 一旦出错 调试比较困难 
+
+另外 可变参数列表必须写在所有参数后面 而且至少要有一个有名的参数
+
+传递到可变参数列表时 会发生一些隐式类型转换 例如 不足`int`的基本类型会拓展成`int` ， `float` 会被拓展成`double` 这也是为什么无论是`float` 还是`double`在`printf`中都使用`%f`的原因[`scanf`不适用 它传入的是指针]
+
+
+
+### 数组参数
+
+数组在传递给函数时 数组类型会退化成指针类型 例如
+
+```c
+int f(int a[],int n);
+int g(int *a,int n);
+```
+
+二者是等价的 但这并不是说指针与数组是等价的 只有作为函数参数时 他们才是等价的 
+
+ 早期的c语言只有第二种写法 第一种是后来加进去的 其实也只是为了更直观
+
+
+
+# 结构、联合、枚举
+
+
+
+
+
+
+
+# c语言的编译过程
 
