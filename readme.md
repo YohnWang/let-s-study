@@ -652,6 +652,32 @@ int main()
 
 
 
+整型常量表示方法除了普通的写法之外 还有其他一些写法
+
+```c
+void f()
+{
+    int x=123; //十进制写法
+    int y=012; //八进制写法 0开头便是八进制表示
+    int z=0xf; //十六进制写法 0x开头
+    
+    long a=0L; //L后缀 代表long类型 不使用的话 0为int类型 之后会拓展成long
+    long long int b=0LL; //LL后缀 代表long long int
+    unsigned int c=0U;  //U后缀 代表无符号
+    unsigned long long int d=1LLU; //LLU后缀 代表unsigned long long int
+    short int e=1S; //S后缀 代表short 
+    
+    float f=11.25f; //f后缀 代表float
+    double g=12.5E12; //表示12.5乘10的12次方
+}
+```
+
+上述的后缀均可换成小写或大写字母 `0x`也可以用`0X`表示
+
+
+
+
+
 小数的表示有以下几种类型
 
 1. `float`
@@ -1991,7 +2017,7 @@ int bfind(int a[],int begin,int end,int key)
 
 函数也可以相互递归 考虑一个不太好的例子 用于判断一个数的奇偶性 
 
-这里不适用求模运算 而是使用一个较慢的版本
+这里不使用求模运算 而是使用一个较慢的版本
 
 1. 定义0是偶数
 2. 如果比他小1的数是偶数 那么他是奇数
