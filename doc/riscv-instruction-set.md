@@ -154,3 +154,148 @@ x28-31      t3-6            Temporaries                        Caller
 
 他们描述了这些寄存器需要由调用者保存还是被调用者保存
 
+
+
+## 控制与状态寄存器（CSR）
+
+CSR有专门的寄存器读写指令 均为`csr`开头
+
+CSR有四种模式 分别为M S H U
+
+这里暂时只列出机器级 即M
+
+### mcpuid
+
+cpu的id寄存器 用于存放cpuid
+
+
+
+### mstatus
+
+状态寄存器 该寄存器有中断使能位 
+
+[4:0]分别为[MIE,WPRI,SIE,UIE] 分别控制机器级中断 管理员级中断 用户级中断
+
+WPRI位可以忽略 
+
+其他信息查看riscv的特权级手册
+
+
+
+### mtvex
+
+机器自陷向量基址寄存器 用于存放自陷向量地址
+
+例如 
+
+```
+_start:
+	la trap_vector
+	j main
+	
+trap_vector:
+	...
+```
+
+当发生自陷时 会进入该向量地址的首个指令
+
+
+
+### mie
+
+机器中断使能
+
+第7位为机器中断使能位 
+
+
+
+### mepc
+
+该寄存器用于保存机器发生自陷时的指令地址 例如
+
+```
+do_something:
+	...
+	scall
+	...
+	
+trap_vector:
+	...
+	csrr t0,mepc
+	addi t0,t0,4
+	csrw mepc,t0
+	mret
+```
+
+scall会引发一个自陷 mepc保存该条指令的地址 处理完中断后 要继续执行需要返回至下一条指令的地址
+
+另外 如何区分自陷的类型 需要使用mcause寄存器
+
+
+
+### mcause
+
+mcause反映了当前trap的类型 当机器自陷时 需要使用该寄存器的值来处理相应的trap
+
+
+
+# 系统指令
+
+```
+scall 
+sbreak
+csrrw  rd,csr,rs1      rd=csr,csr=rs1
+csrrc  rd,csr,rs1      rd=csr,then clear the bits of csr by rs1's bits(1 whill be clear)
+csrrs  rd,csr,rs1      rd=csr,csr|=rs1
+csrrwi rd,csr,imm[4:0]
+csrrci rd,csr,imm[4:0]
+csrrsi rd,csr,imm[4:0]
+```
+
+
+
+# 伪指令
+
+```
+la    rd,symbol          rd=symbol
+l{b,h,w,d} rd,symbol     rd=(type)symbol
+s{b,h,w,d} rd,symbol,rt  *symbol=rd (rt assiant)
+
+nop 
+li   rd,immediate    rd=immediate
+mv   rd,rs           rd=rs
+not  rd,rs           rd=~rs
+neg  rd,rs           rd=-rs
+
+seqz rd,rs         if rs==0 then rd=1
+snez rd,rs         if rs!=0 then rd=1
+sltz rd,rs         if rs<0  then rd=1
+sgtz rd,rs         if rs>0  then rd=1
+
+beqz rs,offset     if rs==0 then jump
+bnez rs,offset     if rs!=0 then jump
+blez rs,offset     if rs<=0 then jump
+bgez rs,offset     if rs>=0 then jump
+bltz rs,offset     if rs<0  then jump
+bgtz rs,offset     if rs>0  then jump
+bgt rs,rt,offset   if rs>rt then jump
+ble rs,rt,offset   if rs<=rt then jump
+bgtu rs,rt,offset  (unsigned) 
+bleu rs,rt,offset  (unsigned)
+
+j offset           jump to offset
+jal offset         jump to offset and link (return address save in ra)
+jr rs              jump to rs
+jalr rs            jump to rs and link (ra)
+ret                return (return address in ra)
+
+csrr  rd,csr       rd=csr
+csrw  csr,rs       csr=rs
+csrs  csr,rs       set bit csr 
+csrc  csr,rs       clear bit csr
+
+csrwi csr,imm
+csrsi csr,imm
+csrci csr,imm
+```
+
