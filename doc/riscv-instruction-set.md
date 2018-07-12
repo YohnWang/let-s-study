@@ -20,14 +20,14 @@ and  rd,rs1,rs2  rd=rs1&rs2
 or   rd,rs1,rs2  rd=rs1|rs2
 xor  rd,rs1,rs2  rd=rs1^rs2
 slt  rd,rs1,rs2  rd=rs1<rs2 (signed)
-sltu rd,rs1,rs2  rd=rs1<rs2 (usigned)
+sltu rd,rs1,rs2  rd=rs1<rs2 (unsigned)
 ```
 
 
 
 ### I-型
 
-```
+```assembly
 addi  rd,rs1,imm[11:0]    rd=rs1+imm (imm is signed)
 slli  rd,rs1,shamt[4:0]   rd=rs1<<shamt
 srli  rd,rs1,shamt[4:0]   rd=rs1>>shamt (logic)
