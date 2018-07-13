@@ -201,11 +201,15 @@ trap_vector:
 
 
 
-### mie
+### mie与mip
 
-机器中断使能
+mie为机器中断使能 mip在中断发生时保存mie 在中断返回时返还给mie
 
 第7位为机器中断使能位 
+
+软中断有msip寄存器控制，该寄存器是内存映射的，写入1会触发软中断，清除可以解除软中断
+
+注意msip寄存器与MSIP位是不同的
 
 
 
@@ -240,6 +244,22 @@ scall会引发一个自陷 mepc保存该条指令的地址 处理完中断后 �
 ### mcause
 
 mcause反映了当前trap的类型 当机器自陷时 需要使用该寄存器的值来处理相应的trap
+
+
+
+### mtval
+
+mtval会保存出现异常的指令或地址
+
+
+
+### mtime与mtimecmp
+
+mtime与mtimecmp都是内存映射的，并且固定为64位。
+
+mtime会以恒定的频率自增，当mtime大于等于mtimecmp时会触发中断。
+
+mtime也可以被写入。
 
 
 
