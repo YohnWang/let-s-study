@@ -303,8 +303,8 @@ csrrsi rd,csr,imm[4:0]
 
 ```
 la    rd,symbol          rd=symbol
-l{b,h,w,d} rd,symbol     rd=(type)symbol
-s{b,h,w,d} rd,symbol,rt  *symbol=rd (rt assiant)
+l{b,h,w,d} rd,symbol     rd=*(type*)symbol
+s{b,h,w,d} rd,symbol,rt  *(type*)symbol=rd (rt assiant)
 
 nop 
 li   rd,immediate    rd=immediate
