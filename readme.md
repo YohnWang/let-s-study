@@ -6,3 +6,5 @@
 
 ## [riscv指令集](https://github.com/YohnWang/let-s-study/blob/master/doc/riscv-instruction-set.md)
 
+## [python](https://github.com/YohnWang/let-s-study/blob/master/doc/learning-python.md) 
+
