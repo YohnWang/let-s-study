@@ -70,6 +70,8 @@ sw  rs2,imm[11:0](rs1)  *(int32_t*)(rs1+imm)=rs2
 sd  rs2,imm[11:0](rs1)  *(int64_t*)(rs1+imm)=rs2   (64-bit only)
 ```
 
+(rs1+imm中imm会符号拓展)
+
 这些指令用于读取或存储对应地址上的数据 例如
 
 ```assembly
