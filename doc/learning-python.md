@@ -359,13 +359,15 @@ def f()->"a string" :
 
 # 类
 
-将类的实例称为对象
+将类的实例称为对象，类本身也是对象
 
 ## 成员
 
+`python`的所有成员都是`public`的
+
 ### 实例属性
 
-python的实例对象在方法中绑定
+python的成员在方法中绑定
 
 ```python
 class T:
@@ -380,19 +382,94 @@ t=T("John",22)
 
 `self.name`直接创建了一个名为`name`的属性，该属性是每个实例对象独有的
 
-### 类属性
+
 
 
 
 ## 方法
 
+`python`的所有成员函数都是`virtual`的
+
+`python`中类的方法的第一个参数会传入自身的引用，在调用时会被忽略
+
+```python
+class MyClass :
+	"""a doc attribute""" # __doc__ 文档字符串
+	i=12345  #所有类的实例共享
+    def __init__(self,name="a class"):  #构造函数
+    	self.name=name  
+    def f(self):
+        print(self.name)
+```
+
+
+
 ## 访问控制
 
 ## 类的运算符重载
 
+## 继承
+
+## 迭代器与生成器
+
 
 
 # 模块 
+
+模块是包括 Python 定义和声明的文件。文件名就是模块名加上 `.py` 后缀。模块的模块名（做为一个字符串）可以由全局变量 `__name__` 得到（如果通过`py run.py`执行，那么`__name__`会被设置成`"__main__"`）。 
+
+## import
+
+`import`可以引入模块名，例如在`example.py`文件中有一个`add()`函数，则在另一个`py`文件中导入的方式如下
+
+```python
+import example
+print(example.add(10,20))
+```
+
+`import`可以写在任意位置，只要在使用前声明即可
+
+
+
+## from ... import ...
+
+该语句可以直接导入另一个模块的名字
+
+```python
+from example import add
+print(add(10,20))
+```
+
+
+
+## 模块中的可执行语句
+
+模块中的可执行语句一般用来初始化模块，在`import`该模块时会开始执行
+
+
+
+## 搜索路径
+
+解释器先在当前目录中搜索 ，如果没有找到的话，接着会到 `sys.path`变量中给出的目录列表中查找 
+
+
+
+## dir()
+
+内置函数 `dir()` 用于按模块名搜索模块定义，它返回一个字符串类型的存储列表 
+
+
+
+## 包
+
+```python
+import dir
+from dir import dir.module
+```
+
+
+
+//TODO
 
 
 
@@ -411,9 +488,10 @@ sub3=l[2:]  #右下标默认len(l)
 sub4=l[:]   #左右下标均默认，相当于一份l的浅拷贝
 x=sub[-1]   #负数表示逆序顺序
 del l[0]    #解除列表对象下标为0的元素的引用
-ex=l+[1,2,3]
-l+=[4,5]
-l.pop()
+ex=l+[1,2,3]#生成一个拼接后的列表
+l+=[4,5]    #末尾添加
+l.pop()     #解除末尾绑定，可指定下标
+l[0:2]=[-1,-2]#区间替换
 ```
 
 列表推导式
