@@ -504,23 +504,67 @@ l=[x**2 for x in range(1,10)]
 
 ## 元组
 
-`()`
+`()` 
+
+元组不可变
+
+```python
+empty=()
+single=123, #单个元素的元组后面跟一个','
+double=1,2
+triple=(1,2,3)
+```
+
+
 
 ## 集合
 
 `set()`
 
+`set`支持并、交、差、对称差集运算，分别使用`| & - ^`
+
+
+
 ## 字典
 
 `{key:value}` `dict()`
 
+字典由键：值组成，键必须是不可变对象
+
+```python
+tab={1:1,2:4,3:9}
+print(tab[2])
+tab[4]=16
+
+x={x:x**2 for x in range(1,10)}
+
+stu={"john":1,"tony":32,"jack":39,"tom":18,"peter":9}
+print("john" in stu)
+stu["abby"]=29 #向字典添加一个键值对
+del std["jack"]#删除"jack"
+
+xstu=stu.items() #返回一个(key,value)的列表(该列表是dict_items类型的，不是内置列表)
+```
+
+
+
 ## 字符串
 
+字符串可以使用`" "`或`''`表示
+
+`r"\n"`可以消除转义
+
+`""" ... """`可以实现多行字符串，如果想消除换行可以在行尾添加一个`\`
+
+```python
+s="this is "+"a string" #拼接字符串
 
 
+```
 
+字符串是不可变对象
 
-
+切片操作参考列表
 
 
 
