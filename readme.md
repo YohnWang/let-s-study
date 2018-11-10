@@ -8,3 +8,4 @@
 
 ## [python](https://github.com/YohnWang/let-s-study/blob/master/doc/learning-python.md) 
 
+## [verilog笔记]()
