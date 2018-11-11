@@ -163,6 +163,8 @@ reg[31:0] arr[127:0];
 initial arr[0]=1; //数组的用法和c语言类似，注意与verilog向量的用法加以区分
 ```
 
+另外`signed`和`unsigned`可以指定是否有符号，例如`reg signed [31:0] x; `
+
 
 
 # assign
