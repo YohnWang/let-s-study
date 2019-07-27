@@ -1030,7 +1030,7 @@ int main()
 
 最后附上c语言运算符的优先级与结合性表 越靠前的运算符优先级越高 相同行的运算符优先级相同
 
-![operator](https://github.com/YohnWang/let-s-study/blob/master/resource/picture/c-operators.png)
+![operator](../resource/picture/c-operators.png)
 
 
 
