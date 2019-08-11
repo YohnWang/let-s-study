@@ -6,7 +6,7 @@ LATEX公式行内使用两个`$`，例如
 
 行内公式有多种写法，例如
 
-```
+```latex
 \begin{equation}
 
 f(x)=ax+b
@@ -22,6 +22,8 @@ f(x)=ax+b
 
 \end{equation}
 $$
+
+LATEX一般推荐使用`\[`和`\]`来表示行间公式
 
 显然，LATEX公式会忽略换行和空格，如果需要换行，则使用`\\`来表示，而一个空格则使用`\ `表示，注意这个反斜杠后面需要跟一个空格符号
 
@@ -39,7 +41,7 @@ $$
 
 多项式的表示方法，需要使用上下标等格式，例如
 
-```
+```latex
 y={a}_{1}{x}_{1}^{3}+{a}_{2}{x}_{2}^{2}+{a}_{3}{x}_{3}+{a}_{4}
 ```
 
@@ -111,7 +113,7 @@ $$
 
 可以自定义算符，`\DeclareMathOperator*`表示定义带上下限的自定义符号，没有`*`就是不带
 
-```
+```latex
 \begin{equation}
 \DeclareMathOperator*{\what}{P}
 y=\what_{x=1}^nx
@@ -133,7 +135,7 @@ $$
 
 # 矩阵
 
-```
+```latex
 \begin{matrix}
 1 & 2 & 3 \\
 4 & 5 & 6 \\
@@ -181,7 +183,7 @@ $$
 
 可以使用矩阵和括号的形式来描述
 
-```
+```latex
 |x|=
 \left\{ 
 \begin{matrix}
@@ -204,6 +206,15 @@ $$
 `\left\{`  `\right.`可以使他们之间的内容被括起来，`\right.`表示不显示内容
 
 另一种方式是采用`{cases}`
+
+```latex
+|x| = 
+\begin{cases}
+x & \text{if }x \ge 0 \\
+-x & \text{others}
+\end{cases}
+```
+
 
 
 $$
@@ -273,4 +284,108 @@ $$
 # 公式编号
 
 例如`{align*}`，带有`*`的都表示不带编号，不带`*`如果不想使用编号，可以使用`\notag`
+
+另外，`{aligned}`和`{gathered}`可以将多行公式作为一个整体进行编号
+
+引用公式可以使用`\label{}`和`\ref{}`，括号内是标签名，`\eqref`可以为编号加上圆括号
+
+
+
+`{equation}`会为公式自动添加编号，而`\[ \]`不会添加编号，同样的，`{equation*}`也表示不带编号
+
+`\tag`命令可以手动修改公式编号，例如
+
+```latex
+e=\lim_{n \rightarrow \infty}(1+\frac{1}{n})^n \tag{1.2}
+```
+
+
+$$
+e=\lim_{n \rightarrow \infty}(1+\frac{1}{n})^n \tag{1.2}
+$$
+
+
+# 格式控制
+
+`\quad`和`\qquad`可以认为引入行间距，例如
+
+```latex
+a \quad b \qquad c
+```
+
+$$
+a \quad b \qquad c
+$$
+
+间距控制还有其他的命令，如`\空格`可以使字符之间存在一个空格
+
+另外还有`\, \: \;` ，间距依次变大
+
+`\!`可以用来缩小间距
+
+
+
+`\mathrm{}`可以使括号内的内容变为整体，另一种相同功能的是`\text{}`
+
+`\mathbf{}`可以使拉丁字母变粗
+
+```latex
+A \quad \mathrm{A} \quad \mathbf{A}
+```
+
+$$
+A \quad \mathrm{A} \quad \mathbf{A}
+$$
+
+还有控制数学符号尺寸的命令
+
+`\displaystyle`用于显示行间公式尺寸
+
+`\textstyle`显示行内公式尺寸
+
+`\scriptstyle`显示上下标尺寸
+
+`\scriptscriptstyle`显示次级上下标尺寸
+
+```latex
+P=\frac
+{\sum_{i=1}^n(x_i-x)(y_i-y)}
+{\displaystyle \left[ \sum_{i=1}^n(x_i-x)^2\sum_{i=1}^n(y_i-y)^2 \right] ^ {\frac{1}{2} } }
+```
+
+$$
+P=\frac
+{\sum_{i=1}^n(x_i-x)(y_i-y)}
+{\displaystyle \left[ \sum_{i=1}^n(x_i-x)^2\sum_{i=1}^n(y_i-y)^2 \right] ^ {\frac{1}{2}}}
+$$
+
+该控制符与`\limits`是有一定的区别的，`\limits`只是将上下标的位置改变，而该控制符是将运算符变为行间格式，一般来说会更大一点
+
+# 部分符号展示
+
+## 希腊字母
+
+![greek alphabet](../resource/picture/greek.png)
+
+## 二元关系符
+
+![relation symbol](../resource/picture/relation.png)
+
+## 二元运算符
+
+![operator](../resource/picture/operator.png)
+
+## 大型运算符
+
+![big](../resource/picture/big.png)
+
+## 箭头
+
+![](../resource/picture/arrow.png)
+
+![arrow2](../resource/picture/arrow2.png)
+
+## 定界符
+
+![delimiter](../resource/picture/delimiter.png)
 
