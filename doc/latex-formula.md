@@ -103,7 +103,7 @@ $$
 y=\sum_{n=1}^{\infty}\frac{1}{n}
 $$
 
-```
+```latex
 y=\int_{1}^{\infty}\frac{1}{x^2}\mathrm{d}x
 ```
 
@@ -153,7 +153,7 @@ $$
 
 `&`用于分隔各个数字，如果想带方括号的矩阵，就使用`{bmatrix}`
 
-```
+```latex
 \begin{bmatrix}
 1 & 2 & 3 \\
 4 & 5 & 6 \\
