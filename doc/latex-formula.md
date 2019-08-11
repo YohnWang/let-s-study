@@ -171,11 +171,11 @@ $$
 
 - `{Bmatrix}` $\begin{Bmatrix} 1 &2 \\ 3 & 4 \end{Bmatrix}$
 
-- {pmatrix}  $\begin{pmatrix} 1 &2 \\ 3 & 4 \end{pmatrix}$
+- `{pmatrix}`  $\begin{pmatrix} 1 &2 \\ 3 & 4 \end{pmatrix}$
 
-- {vmatrix} $\begin{vmatrix} 1 &2 \\ 3 & 4 \end{vmatrix}$
+- `{vmatrix}` $\begin{vmatrix} 1 &2 \\ 3 & 4 \end{vmatrix}$
 
-- {Vmatrix} $\begin{Vmatrix} 1 &2 \\ 3 & 4 \end{Vmatrix}$
+- `{Vmatrix}` $\begin{Vmatrix} 1 &2 \\ 3 & 4 \end{Vmatrix}$
 
 # 选择符号
 
@@ -214,7 +214,63 @@ x & \text{if }x \ge 0 \\
 \end{cases}
 $$
 
-# 希腊字母
+# 多行公式
 
+`{multline}`可以用于书写多行公式，如
 
+```latex
+\begin{multline}
+a+b+c+d+e+f=\\
+1+2+3+4+5+6=\\
+21
+\end{multline}
+```
+
+$$
+\begin{multline}
+a+b+c+d+e+f=\\
+1+2+3+4+5+6=\\
+21
+\end{multline}
+$$
+
+如果需要以某个地方对齐，可以使用`{align}`，通过`&`符号来判定对齐哪个符号
+
+```latex
+\begin{align}
+a+b+c+d+e+f & = \\
+1+2+3+4+5+6 & = 21\\
+\end{align}
+```
+
+$$
+\begin{align}
+a+b+c+d+e+f & = \\
+1+2+3+4+5+6 & = 21\\
+\end{align}
+$$
+
+上述例子就是对齐 `=` 
+
+如果不想对齐某个符号，只是想列举各个公式，可以使用`{gather}`
+
+```latex
+\begin{gather}
+a^2+b^2=c^2 \\
+1+2+3+4=10 \\
+\Delta=b^2-4ac
+\end{gather}
+```
+
+$$
+\begin{gather}
+a^2+b^2=c^2 \\
+1+2+3+4=10 \\
+\Delta=b^2-4ac
+\end{gather}
+$$
+
+# 公式编号
+
+例如`{align*}`，带有`*`的都表示不带编号，不带`*`如果不想使用编号，可以使用`\notag`
 

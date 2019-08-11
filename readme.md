@@ -11,3 +11,6 @@
 ## [verilog笔记](./doc/verilog.md)
 
 ## [c++ note](./doc/c++.md)
+
+## [LATEX公式](./doc/latex-formula.md)
+
