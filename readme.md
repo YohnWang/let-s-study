@@ -14,3 +14,5 @@
 
 ## [LATEX公式](./doc/latex-formula.md)
 
+## [numpy](./doc/numpy.md)
+
