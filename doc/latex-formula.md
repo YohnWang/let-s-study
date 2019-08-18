@@ -133,6 +133,35 @@ $$
 
 用`\limits`强制让他在正上下方，`\sum\limits_{n=1}^{100}n`显示为$\sum\limits_{n=1}^{100}n$
 
+# 微积分与向量的表示方法
+
+求导表示的方法，常用的格式如$y{'}=x$使用`y{'}=x`表示，`{}`内`'`的个数可以增加，用于表示更高阶的导数
+
+另一种表示方法使用$\mathrm{d}x$表示，他的写法是`\mathrm{d}x`
+
+偏导的表示常用$\partial F$表示，$\partial$ 使用`\partial`表示
+
+梯度的表示使用nabla算子，例如一个三维的梯度表示
+$$
+\nabla F=\frac{\partial F}{\partial x}\vec{i}+\frac{\partial F}{\partial y}\vec{j}+\frac{\partial F}{\partial z}\vec{k}
+$$
+
+```latex
+\nabla F=\frac{\partial F}{\partial x}\vec{i}+\frac{\partial F}{\partial y}\vec{j}+\frac{\partial F}{\partial z}\vec{k}
+```
+
+`\vec{}`用于表示带箭头的符号，向量的表示方法还可以将字体加粗，`\boldsymbol{}`可以使指定的符号加粗，但只能用于一部分符号
+$$
+\nabla F=\frac{\partial F}{\partial x}\boldsymbol{i}+\frac{\partial F}{\partial y}\boldsymbol{j}+\frac{\partial F}{\partial z}\boldsymbol{k}
+$$
+积分采用大型运算符表示，例如$\int_0^1x\mathrm{d}x$，即`\int_0^1x\mathrm{d}x`
+
+重积分只需在`\int`前多加几个`i`即可，例如二重积分使用`\iint`
+
+# 概率统计中的表示
+
+在参数估计中，对于估计量的表示，一般使用$\hat{y}$表示，他的写法是`\hat{y}`
+
 # 矩阵
 
 ```latex
