@@ -415,11 +415,106 @@ class MyClass :
 
 ## 访问控制
 
-## 类的运算符重载
+## 类的运算符重载与一些内置方法
+
+类可以通过编写某些特定名称的函数来重载运算符，例如重载加法
+
+```python
+class T :
+    def __init__(self,re=0,im=0):
+        self.re=re
+        self.im=im 
+    def __add__(self,rhs):
+        return T(self.re+rhs.re,self.im+rhs.im)
+    def __str__(self):
+        return str(self.re)+"+"+str(self.im)+"i"
+
+a=T(1,2)
+b=T(3,4)
+print(a+b)
+```
+
+`__add__()`方法用于重载`+`，并且`+`左边的类型必须是`T`，右侧可以任意，如果想右侧的类型是`T`，而左侧任意，则需要重写`__radd__()`，另外还有复合赋值运算符如`+=`，对应的函数名是`__iadd__()`.
+
+```python
+__add__(self,rhs)        self + rhs         加法
+__sub__(self,rhs)        self - rhs         减法
+__mul__(self,rhs)        self * rhs         乘法
+__truediv__(self,rhs)    self / rhs         除法
+__floordiv__(self,rhs)   self //rhs         取整除
+__mod__(self,rhs)        self % rhs         取模(求余)
+__pow__(self,rhs)        self **rhs         幂运算
+
+__lt__(self,rhs)         self < rhs         小于
+__le__(self,rhs)         self <= rhs        小于等于
+__gt__(self,rhs)         self > rhs         大于
+__ge__(self,rhs)         self >= rhs        大于等于
+__eq__(self,rhs)         self == rhs        等于
+__ne__(self,rhs)         self != rhs        不等于
+
+__and__(self,rhs)        self & rhs         位与
+__or__(self,rhs)         self | rhs         位或
+__xor__(self,rhs)        self ^ rhs         位异或
+__lshift__(self,rhs)     self <<rhs         左移
+__rshift__(self,rhs)     self >>rhs         右移
+
+__neg__(self)            -self              负号
+__pos__(self)            +self              正号
+__invert__(self)         ~self              取反
+
+__getitem__(self,i)      x=self[i]          索引/切片取值
+__setitem__(self,i,v)    self[i]=v          索引/切片赋值
+__delitem__(self,i)      del self[i]        del语句删除索引/切片
+
+```
+
+`__str__`方法用于返回对象的字符描述，一般`print`方法中会用到，已到达输出的目的
+
+
 
 ## 继承
 
 ## 迭代器与生成器
+
+`__iter__`与`__next__`用于迭代器，例如设计一个简单的自增1的`range`，命名为`onerange`
+
+```python
+class onerange:
+    def __init__(self,begin=0,end=0):
+        self.begin=begin 
+        self.end=end
+    def __iter__(self):
+        return self 
+    def __next__(self):
+        if self.begin < self.end:
+            r=self.begin
+            self.begin+=1
+            return r 
+        else :
+            raise StopIteration
+```
+
+另一种方法是使用生成器，生成器可以快速地创建一个迭代器
+
+```python
+def nrange(begin,end,step=1):
+    while begin < end :
+        yield begin 
+        begin+=step 
+```
+
+`yield`与`return`类似，会返回值，只是如果下次继续调用该函数时，不是重新执行，而是会从`yield`之后的语句再开始执行
+
+### 生成器表达式
+
+与列表表达式类似，只是将`[]`替换为`()`，相对于列表推导式，生成器表达式可节省内存
+
+```python
+l=(i*i for i in range(0,10))
+print(l)
+for i in l:
+    print(i)
+```
 
 
 
