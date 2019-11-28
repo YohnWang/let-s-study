@@ -163,38 +163,20 @@ $$
 在参数估计中，对于估计量的表示，一般使用$\hat{y}$表示，他的写法是`\hat{y}`
 
 另外一些如下
-
-```latex
-\bar{a} \\
-\overline{a} \\
-\hat{a} \\
-\widehat{A} \\
-\dot{a} \\
-\ddot{a} \\
-\tilde{a} \\
-\widetilde{A} \\
-\vec{a} \\
-\check{a} \\
-\acute{a} \\
-\grave{a} \\
-```
-
-$$
-\bar{a} \\
-\overline{a} \\
-\hat{a} \\
-\widehat{A} \\
-\dot{a} \\
-\ddot{a} \\
-\tilde{a} \\
-\widetilde{A} \\
-\vec{a} \\
-\check{a} \\
-\acute{a} \\
-\grave{a} \\
-$$
-
-
+|      代码       |      样式       |
+| :-------------: | :-------------: |
+|`\bar{a}`        |       $\bar{a}$|
+|`\overline{a}` |	$\overline{a}$|
+|`\hat{a}` 		|      $\hat{a}$	|
+|`\widehat{A}`  |    $\widehat{A}$||
+|`\dot{a}`      |         $\dot{a}$|
+|`\ddot{a}`     |        $\ddot{a}$|
+|`\tilde{a}`    |       $\tilde{a}$|
+|`\widetilde{A}`| $\widetilde{A}$|
+|`\vec{a}`       |       $\vec{a}$|
+|`\check{a}`     |     $\check{a}$|
+|`\acute{a}`     |    $\acute{a}$|
+|`\grave{a}`     |    $\grave{a}$|
 
 # 矩阵
 
@@ -234,13 +216,13 @@ $$
 
 还有不同的括号类型
 
-- `{Bmatrix}` $\begin{Bmatrix} 1 &2 \\ 3 & 4 \end{Bmatrix}$
+|   代码   |  样例    |
+| :--: | :--: |
+|  `{Bmatrix}`    |   $\begin{Bmatrix} 1 &2 \\ 3 & 4 \end{Bmatrix}$    |
+|   `{pmatrix}`   |    $\begin{pmatrix} 1 &2 \\ 3 & 4 \end{pmatrix}$   |
+|   `{vmatrix}`   |  $\begin{vmatrix} 1 &2 \\ 3 & 4 \end{vmatrix}$    |
+|`{Vmatrix}`|      $\begin{Vmatrix} 1 &2 \\ 3 & 4 \end{Vmatrix}$      |
 
-- `{pmatrix}`  $\begin{pmatrix} 1 &2 \\ 3 & 4 \end{pmatrix}$
-
-- `{vmatrix}` $\begin{vmatrix} 1 &2 \\ 3 & 4 \end{vmatrix}$
-
-- `{Vmatrix}` $\begin{Vmatrix} 1 &2 \\ 3 & 4 \end{Vmatrix}$
 
 # 选择符号
 
@@ -308,21 +290,13 @@ $$
 
 # 公式字体
 
-```latex
-\mathbb{ABC} \\
-\mathbf{ABC} \\
-\mathcal{ABC} \\
-\mathscr{ABC} 
-```
-
-$$
-ABC \\
-\mathbb{ABC} \\
-\mathbf{ABC} \\
-\mathcal{ABC} \\
-\mathscr{ABC} \\
-\mathrm{ABC}
-$$
+|      代码       |      样式       |
+| :-------------: | :-------------: |
+| `\mathbb{ABC}`  | $\mathbb{ABC}$  |
+| `\mathbf{ABC}`  | $\mathbf{ABC}$  |
+| `\mathcal{ABC}` | $\mathcal{ABC}$ |
+| `\mathscr{ABC}` | $\mathscr{ABC}$ |
+| `\mathrm{ABC}`  | $\mathrm{ABC}$  |
 
 # 多行公式
 
