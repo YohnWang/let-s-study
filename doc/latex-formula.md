@@ -158,9 +158,43 @@ $$
 
 重积分只需在`\int`前多加几个`i`即可，例如二重积分使用`\iint`
 
-# 概率统计中的表示
+# 重音符
 
 在参数估计中，对于估计量的表示，一般使用$\hat{y}$表示，他的写法是`\hat{y}`
+
+另外一些如下
+
+```latex
+\bar{a} \\
+\overline{a} \\
+\hat{a} \\
+\widehat{A} \\
+\dot{a} \\
+\ddot{a} \\
+\tilde{a} \\
+\widetilde{A} \\
+\vec{a} \\
+\check{a} \\
+\acute{a} \\
+\grave{a} \\
+```
+
+$$
+\bar{a} \\
+\overline{a} \\
+\hat{a} \\
+\widehat{A} \\
+\dot{a} \\
+\ddot{a} \\
+\tilde{a} \\
+\widetilde{A} \\
+\vec{a} \\
+\check{a} \\
+\acute{a} \\
+\grave{a} \\
+$$
+
+
 
 # 矩阵
 
@@ -252,6 +286,42 @@ $$
 x & \text{if }x \ge 0 \\
 -x & \text{others}
 \end{cases}
+$$
+
+# 上下括号
+
+即`overbrace{}`与`underbrace{}`，说明文字至于上下方使用`^ _`
+
+```latex
+\begin{aligned}
+\overbrace{p(x_t|y_1...y_t)}^{\text{update}} &\propto \\
+&p(y_t|x_t) \underbrace{ p(x_t|y_1...y_{t-1})}_{\text{prediction}}
+\end{aligned}
+```
+
+$$
+\begin{aligned}
+\overbrace{p(x_t|y_1...y_t)}^{\text{update}} &\propto \\
+&p(y_t|x_t) \underbrace{ p(x_t|y_1...y_{t-1})}_{\text{prediction}}
+\end{aligned}
+$$
+
+# 公式字体
+
+```latex
+\mathbb{ABC} \\
+\mathbf{ABC} \\
+\mathcal{ABC} \\
+\mathscr{ABC} 
+```
+
+$$
+ABC \\
+\mathbb{ABC} \\
+\mathbf{ABC} \\
+\mathcal{ABC} \\
+\mathscr{ABC} \\
+\mathrm{ABC}
 $$
 
 # 多行公式
