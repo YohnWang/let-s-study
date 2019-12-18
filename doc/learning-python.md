@@ -81,7 +81,29 @@ c=10+6j
 
 销毁对象由GC自动完成，程序员无法主动销毁
 
+## 作用域
 
+在`for`语句中，存在一个较为犯错的问题，例如
+
+```python
+i = 0
+for i in range(0,10):
+    ...
+print(i)
+```
+
+如果是其他语言例如`c++`，那么循环中的`i`与外部的`i`应该是独立的，但这里，他们是同一个变量名
+
+python的名字搜索顺序为，局部->非局部->全局->内建
+
+另一个，如果名字出现在`=`左边，那么在局部中他是创建了一个局部变量，而不是赋值给全局变量，如果希望赋值给全局变量，则需要使用`global`
+
+```python
+counter=0
+def f():
+    global counter
+    counter+=1
+```
 
 # 控制结构
 
@@ -118,8 +140,6 @@ while i<10:
 ```
 
 同样的，python也支持`break`与`continue`
-
-
 
 ### for
 
@@ -294,7 +314,17 @@ i=0
 
 而参数个数问题可以通过缺省参数实现
 
+一种用于实现类似重载的方式为，使用`isinstance()`函数，用于判断对象类型，例如
 
+```python
+def f(x,y):
+    if isinstance(y,int):
+        return x+y
+    elif isinstance(y,(float,str)):
+        return x+int(y)
+    else :
+        raise TypeError
+```
 
 ## 关键字参数
 
@@ -533,7 +563,11 @@ print(example.add(10,20))
 
 `import`可以写在任意位置，只要在使用前声明即可
 
+重命名写法如
 
+```python
+import numpy as np #模块重命名 使用如 np.exp(-1)
+```
 
 ## from ... import ...
 
@@ -544,7 +578,11 @@ from example import add
 print(add(10,20))
 ```
 
+其他写法如
 
+```python
+from other import * #导入模块，名字直接使用
+```
 
 ## 模块中的可执行语句
 
@@ -567,8 +605,8 @@ print(add(10,20))
 ## 包
 
 ```python
-import dir
-from dir import dir.module
+import dir #导入模块，使用方法如 dir.func()
+from dir import dir.module 
 ```
 
 
@@ -598,10 +636,18 @@ l.pop()     #解除末尾绑定，可指定下标
 l[0:2]=[-1,-2]#区间替换
 ```
 
+python列表的`[]`运算符实际上是内置的`__getitem__()`函数，它可以接受整型下标，也可以接受一个`slice`对象，即带有`:`运算符可以创建一个该对象，该对象的格式为`begin:end:step`，一般为左闭右开区间
+
 列表推导式
 
 ```python
 l=[x**2 for x in range(1,10)]
+```
+
+由于列表推导式会产生一个列表对象，如果需要更高效率，并且只是希望用于迭代可以用生成器表达式，即将`[]`改为`()`，如
+
+```python
+g=(x**2 for x in range(1,10))
 ```
 
 
@@ -669,6 +715,14 @@ s="this is "+"a string" #拼接字符串
 字符串是不可变对象
 
 切片操作参考列表
+
+目前还有一种`f-string`，类似于`f"this is a f-string"`，他可以将变量输出，如
+
+```python
+x=10
+s="string"
+print(f"the x is {x} ,and s is {s}")
+```
 
 
 
