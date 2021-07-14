@@ -16,3 +16,4 @@
 
 ## [numpy](./doc/numpy.md)
 
+## [socket](./doc/socket.md)
