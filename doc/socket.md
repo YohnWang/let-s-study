@@ -116,11 +116,11 @@ h代表host，n代表net，s代表short，l代表long
 
 ```c
 #include<arpa/inet.h>
-int inet_pton(int family,const char *str,void *addr); //返回值 -1 出错，0 格式错误，1成功
-const char* inet_ntop(int family,const void *addr,char *str,size_t len);//返回值 NULL 失败
+int inet_pton(int family,const char *str,void *ip_addr); //返回值 -1 出错，0 格式错误，1成功
+const char* inet_ntop(int family,const void *ip_addr,char *str,size_t len);//返回值 NULL 失败
 ```
 
 其中p代表presentation，n代表numeric
 
-`family`代表地址族，`str`代表十进制点分式字符串，`addr`代表网络字节序的ip地址，`len`代表字符数组长度
+`family`代表地址族，`str`代表十进制点分式字符串，`ip_addr`代表网络字节序的ip地址，`len`代表字符数组长度
 
