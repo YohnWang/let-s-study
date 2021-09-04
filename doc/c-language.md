@@ -62,6 +62,8 @@
 - [利用c语言实现面向对象编程](#利用c语言实现面向对象编程)
 - [常见的问题](#常见的问题)
 
+[TOC]
+
 
 
 
@@ -3000,9 +3002,114 @@ int f()
 
 # gcc拓展语法
 
+## 类型推导
 
+c++11可以使用`auto`，`decltype`关键字自动推导类型，这在很多时候相当地方便
 
+gcc拓展了c在这方面的功能，可以使用关键字`__auto_type`和`typeof`进行类型推导
 
+```c
+__auto_type x=0LL;
+typeof(x) y;
+```
+
+## 内嵌表达式
+
+在`({...})`中可以进行定义与语句，该表达式的最后一条语句将作为返回值
+
+`#define max(a,b) ({__auto_type r=a; if(a>b)r=a; else r=b; r;})`
+
+`#define swap(a,b) ({__auto_type t=a;a=b;b=t;})`
+
+## 嵌套函数（Nested Functions）
+
+gcc允许在函数内部定义函数，这类似于c++的lambda表达式，该功能在某些场景下非常有用
+
+嵌套函数可以实现闭包的功能，嵌套函数可以访问调用它的函数的内部变量而不需要通过参数传递的方式
+
+这在复杂的回调场景下将变得非常有意义，例如
+
+现在有几个定时器事件，我们希望在设定的时间到达后执行某些操作
+
+```c
+int f()
+{
+    int x=1;
+    void callback()
+    {
+        x=10;
+    }
+    register_timer(callback,10);
+    ...
+}
+int g()
+{
+    int x=1,y=2;
+    int c;
+    void callback()
+    {
+        c=x+y;
+    }
+    register_timer(callback,20);
+    ...
+}
+```
+
+使用嵌套函数我们将不需要设计复杂的定时器传参机制，因为我们无法确定到底需要传递多少个参数，上述的例子中如果不使用嵌套函数，`f`函数需要传递一个参数，而`g`函数将传递3个参数
+
+在不使用嵌套函数的情况下想达到这种效果，我们不得不将上述的变量定义为全局作用域
+
+## 范围case，范围数组初始化
+
+可以使用这样的`case`语句，`case 1 ... 5:` 它将匹配范围`1-5`的所有变量
+
+可以使用这样的语句对数组初始化，`int a[]={[5,10]=1};`
+
+## 将标签作为值
+
+gcc可以将标签赋值给void指针，例如`void *ptr=&&foo`;，使用`goto *ptr`;可以跳转到标签foo的位置
+
+`static void *array[] = { &&foo, &&bar, &&hack };`
+
+`goto *array[i];`
+
+另一种方式是
+
+`static const int array[] = { &&foo - &&foo, &&bar - &&foo, &&hack - &&foo };`
+
+`goto *(&&foo + array[i]);`
+
+## 局部声明标签
+
+gcc允许在任何块作用域内定义局部标签，用于防止标签名字冲突，因为标签不像普通变量一样可以通过作用域的方式来防止命名冲突
+
+```c
+#define SEARCH(value, array, target) \
+  do { \
+  __label__ found; \
+  typeof (target) _SEARCH_target = (target); \
+  typeof (*(array)) *_SEARCH_array = (array); \
+  int i, j; \
+  int value; \
+  for (i = 0; i < max; i++) \
+  for (j = 0; j < max; j++) \
+  if (_SEARCH_array[i][j] == _SEARCH_target) \
+  {  (value) = i; goto found; } \
+     (value) = -1; \
+     found:; \
+  } while (0)
+```
+
+## 变量长度的数组
+
+c99具有VLA（变长数组），但gcc允许结构体或联合体的数组成员使用变量长度
+
+```c
+void foo (int n)
+{
+    struct S { int x[n]; };
+}
+```
 
 # 数据的表示与运算
 
