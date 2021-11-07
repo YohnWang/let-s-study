@@ -585,7 +585,7 @@ int main()
 
 `Jack=(struct student){"Jack",9,84};`
 
-`=`右边的部分为一个`struct student`类型的临时变量 将他赋值给Jack
+`=`右边的部分为一个`struct student`类型的匿名变量 将它赋值给Jack
 
 `struct`关键字必须出现在 `student`之前 不可省略 
 
